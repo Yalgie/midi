@@ -47,12 +47,27 @@ export class Keyboard extends Component {
         input: WebMidi.inputs[0],
         output: WebMidi.outputs[0],
       });
-      this.state.input.addListener('noteon', "all", this.keyDown);
+      this.state.input && this.state.input.addListener('noteon', "all", this.keyDown);
     });
   }
   render() {
-    return keys.map(key => {
-      return <div key={key} id={key}></div>
-    })
+    const { input } = this.state;
+    return (
+      <>
+        {!input && <p>No MIDI Detected</p>}
+        <div className="keyboard">
+          <div className="white">
+            {keys.filter(key => !key.includes("#")).map(key => {
+              return <div className="key" key={key} id={key}></div>;
+            })}
+          </div>
+          <div className="black">
+            {keys.filter(key => key.includes("#")).map(key => {
+              return <div className="key" key={key} id={key}></div>;
+            })}
+          </div>
+        </div>
+      </>
+    );
   }
 }

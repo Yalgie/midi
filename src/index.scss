@@ -1,0 +1,114 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #09d3ac;
+}
+
+
+
+
+
+//
+
+// 52 White Keys (100 / 52) = 1.92;
+$whiteWidth: 1.92;
+$blackWidth: $whiteWidth / 2;
+$blackOffset: $blackWidth / 2;
+$keyboardHeight: 100px;
+
+.keyboard {
+  box-sizing: border-box;
+  background-color: #333;
+  width: calc(100% - 30px);
+  margin: 15px;
+  display: flex;
+  flex-flow: column;
+  position: relative;
+  height: $keyboardHeight;
+
+  .black,
+  .white {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+  }
+
+  .white .key {
+    width: #{$whiteWidth + "%"};
+    height: $keyboardHeight;
+    border-right: 1px solid #DDD;
+
+    &:last-child {
+      border-right: 0px;
+    }
+  }
+
+  .black {
+    margin-left: -#{$blackOffset + "%"};
+  }
+
+  .black .key {
+    width: 0.96%;
+    height: 70px;
+  }
+
+  .key {
+    box-sizing: border-box;
+    display: inline-block;
+    background-color: #fff;
+
+    &[id$="#0"],
+    &[id$="#1"],
+    &[id$="#2"],
+    &[id$="#3"],
+    &[id$="#4"],
+    &[id$="#5"],
+    &[id$="#6"],
+    &[id$="#7"] {
+      background: #000;
+
+      &[id^="C"],
+      &[id^="F"],
+      &[id^="G"] {
+        margin-left: #{$blackWidth + "%"};
+      }
+      &[id^="D"],
+      &[id^="A"] {
+        margin-left: #{$blackWidth + "%"};
+        margin-right: #{$whiteWidth + "%"};
+      }
+    }
+  }
+}
