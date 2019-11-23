@@ -14,13 +14,6 @@ code {
 
 .App {
   text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-}
-
-.App-header {
   background-color: #282c34;
   min-height: 100vh;
   display: flex;
@@ -109,6 +102,10 @@ $keyboardHeight: 100px;
         margin-left: #{$blackWidth + "%"};
         margin-right: #{$whiteWidth + "%"};
       }
+    }
+
+    &.active {
+      background-color: #09d3ac;
     }
   }
 }
