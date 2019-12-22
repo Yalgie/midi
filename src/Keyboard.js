@@ -1,38 +1,12 @@
 import React, { Component } from 'react';
 import WebMidi from 'webmidi';
-
-
-const keyList = [
-  ["C"],
-  ["C#", "D_"],
-  ["D"],
-  ["D#", "E_"],
-  ["E"],
-  ["F"],
-  ["F#", "G_"],
-  ["G"],
-  ["G#", "A_"],
-  ["A"],
-  ["A#", "B_"],
-  ["B"],
-];
-
-const keys = ["A0", "A#0", "B0"];
-
-var key = 0;
-var octave = 1;
-for (var i = 0; i < 85; i++) {
-    keys.push(keyList[key][0] + "" + octave)
-    key++;
-    if (key === 12) {
-        key = 0;
-        octave++;
-    }
-}
-
-console.log(keys)
+import { keys } from './keys';
 
 export class Keyboard extends Component {
+  static defaultProps = {
+    handleNotePress: null,
+  }
+
   state = {
     input: null,
     output: null,
@@ -42,6 +16,7 @@ export class Keyboard extends Component {
   noteOn = (e) => {
     const note = `${e.note.name}${e.note.octave}`;
     const { activeNotes } = this.state;
+    const { handleNotePress } = this.props; 
     const newActiveNotes = activeNotes
     newActiveNotes.push(note);
 
@@ -49,6 +24,8 @@ export class Keyboard extends Component {
       ...this.state,
       activeNotes: newActiveNotes,
     });
+
+    handleNotePress(newActiveNotes);
   }
 
   noteOff = (e) => {
@@ -81,19 +58,19 @@ export class Keyboard extends Component {
 
     return (
       <>
-        {!input && <p>No MIDI Detected</p>}
-        {input && <p>{input.manufacturer} {input.name} Detected</p>}
+        {!input && <p className="midi-text">No MIDI Detected</p>}
+        {input && <p className="midi-text">{input.manufacturer} {input.name} Detected</p>}
         <div className="keyboard">
           <div className="white">
-            {keys.filter(key => !key.includes("#")).map(key => {
-              const active = activeNotes.includes(key);
-              return <div className={active ? "active key" : "key"} key={key} id={key}></div>;
+            {keys.filter(key => !key.note.includes("#")).map(key => {
+              const active = activeNotes.includes(key.note);
+              return <div className={active ? "active key" : "key"} key={key.note} id={key.note}></div>;
             })}
           </div>
           <div className="black">
-            {keys.filter(key => key.includes("#")).map(key => {
-              const active = activeNotes.includes(key);
-              return <div className={active ? "active key" : "key"} key={key} id={key}></div>;
+            {keys.filter(key => key.note.includes("#")).map(key => {
+              const active = activeNotes.includes(key.note);
+              return <div className={active ? "active key" : "key"} key={key.note} id={key.note}></div>;
             })}
           </div>
         </div>

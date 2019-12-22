@@ -7,14 +7,9 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
-}
-
 .App {
   text-align: center;
-  background-color: #282c34;
+  background-color: #ffffff;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -24,31 +19,25 @@ code {
   color: white;
 }
 
-.App-link {
-  color: #09d3ac;
-}
-
-
-
-
-
-//
-
 // 52 White Keys (100 / 52) = 1.92;
 $whiteWidth: 1.92;
 $blackWidth: $whiteWidth / 2;
 $blackOffset: $blackWidth / 2;
 $keyboardHeight: 100px;
 
+.midi-text {
+  color: #272343;
+}
+
 .keyboard {
   box-sizing: border-box;
-  background-color: #333;
   width: calc(100% - 30px);
   margin: 15px;
   display: flex;
   flex-flow: column;
   position: relative;
   height: $keyboardHeight;
+  padding: 15px;
 
   .black,
   .white {
@@ -61,10 +50,12 @@ $keyboardHeight: 100px;
   .white .key {
     width: #{$whiteWidth + "%"};
     height: $keyboardHeight;
-    border-right: 1px solid #DDD;
+    border-right: 1px solid #272343;
+    border-top: 1px solid #272343;
+    border-bottom: 1px solid #272343;
 
-    &:last-child {
-      border-right: 0px;
+    &:first-child {
+      border-left: 1px solid #272343;
     }
   }
 
@@ -75,12 +66,13 @@ $keyboardHeight: 100px;
   .black .key {
     width: 0.96%;
     height: 70px;
+    border: 1px solid #272343;
   }
 
   .key {
     box-sizing: border-box;
     display: inline-block;
-    background-color: #fff;
+    background-color: #e3f6f5;
 
     &[id$="#0"],
     &[id$="#1"],
@@ -90,7 +82,7 @@ $keyboardHeight: 100px;
     &[id$="#5"],
     &[id$="#6"],
     &[id$="#7"] {
-      background: #000;
+      background: #272343;
 
       &[id^="C"],
       &[id^="F"],
@@ -105,7 +97,80 @@ $keyboardHeight: 100px;
     }
 
     &.active {
-      background-color: #09d3ac;
+      background-color: #bae8e8;
     }
   }
+}
+
+.staff {
+  width: calc(100% - 30px);
+  margin: 15px;
+  box-sizing: border-box;
+  background-color: #e3f6f5;
+  width: calc(100% - 30px);
+  margin: 15px;
+  display: flex;
+  flex-flow: column;
+  position: relative;
+  height: $keyboardHeight;
+  justify-content: space-between;
+  border: 1px solid #272343;
+  border-top: 0;
+  border-bottom: 0;
+
+  .clef {
+    position: absolute;
+  }
+
+  .staff-line {
+    height: 1px;
+    width: 100%;
+    background-color: #272343;
+  }
+}
+
+#note {
+  position: absolute;
+  left: calc(50% - 12.5px);
+  width: 25px;
+  height: 25px;
+
+  &:after {
+    content: '';
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: calc(100% - 0px);
+    height: calc(100% - 0px);
+    background-color: #333;
+    border-radius: 100%;
+  }
+
+  &.correct {
+    &:after {
+      background-color: #3cd070;
+    }
+  }
+
+  &.incorrect {
+    &:after {
+      background-color: #d03c52;
+    }
+  }
+
+  // &.whole {
+    
+  // }
+
+  // &.half {
+
+  // }
+
+  // &.quarter {
+
+  // }
+
+  // &.eigth {
+
+  // }
 }
